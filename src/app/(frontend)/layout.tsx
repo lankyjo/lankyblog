@@ -15,6 +15,26 @@ export const metadata = {
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
+  openGraph: {
+    title: "My Two Cents – Thoughts I Didn't Keep to Myself",
+    description:
+      "A quiet corner of the internet where I share whatever's on my mind—from deep reflections to random sparks of thought. Nothing fancy. Just real.",
+    images: [
+      {
+        url: '/fonts/image_fx.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'My Two Cents Blog Preview',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "My Two Cents – Thoughts I Didn't Keep to Myself",
+    description:
+      "A quiet corner of the internet where I share whatever's on my mind—from deep reflections to random sparks of thought. Nothing fancy. Just real.",
+    images: ['/fonts/image_fx.jpg'],
+  },
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
