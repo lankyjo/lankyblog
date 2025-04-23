@@ -1,7 +1,7 @@
 import { BlogCards } from '@/components/blogssection/BlogSection'
 import getPosts from '@/utils/posts'
 
-export async function generateMetaData() {
+export async function generateMetadata() {
   return {
     title: 'Blogs, All of them',
     description: 'These are all of my Blogs. Enjoy!',

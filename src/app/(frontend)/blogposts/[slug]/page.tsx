@@ -34,14 +34,14 @@ function extractTextFromRichText(node: RichTextNode): string {
   return text
 }
 
-interface SlugProp {
-  params: {
-    slug: string
-  }
-}
-
-export async function generateMetadata({ params }: SlugProp): Promise<Metadata> {
-  const post = await getPost(params.slug)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  // await params for typed routes
+  const { slug } = await params
+  const post = await getPost(slug)
 
   const imageUrl = typeof post.image === 'string' ? post.image : post.image?.url || ''
 
@@ -69,8 +69,11 @@ export async function generateMetadata({ params }: SlugProp): Promise<Metadata> 
   }
 }
 
-export default async function Blogpost({ params }: SlugProp) {
-  const post = await getPost(params.slug)
+export default async function Blogpost({ params }: { params: Promise<{ slug: string }> }) {
+  // Await the params to satisfy Next.js typed routes
+  const { slug } = await params
+
+  const post = await getPost(slug)
   const imageUrl = typeof post.image === 'string' ? post.image : post.image?.url
   const posts = await getPosts(3)
 
@@ -113,9 +116,9 @@ export default async function Blogpost({ params }: SlugProp) {
 
       <div className="mt-5">
         <h4 className="text-cherry text-4xl font-ghoip mb-5">Recent Posts</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {posts.docs
-            .filter((recentPost) => recentPost.slug !== params.slug) // Exclude current post
+            .filter((recentPost) => recentPost.slug !== slug)
             .map((recentPost) => {
               const imageUrl =
                 typeof recentPost.image === 'object' && recentPost.image
